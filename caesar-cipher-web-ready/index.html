@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>caesar-cipher</title>
+<meta name="description" content="Caesar cipher encryption, decryption, and brute-force cracking — in your browser." />
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="crt"></div>
+
+<div class="wrap">
+
+  <header class="banner" aria-hidden="false">
+    <pre class="ascii">
+ ██████╗ █████╗ ███████╗███████╗ █████╗ ██████╗
+██╔════╝██╔══██╗██╔════╝██╔════╝██╔══██╗██╔══██╗
+██║     ███████║█████╗  ███████╗███████║██████╔╝
+██║     ██╔══██║██╔══╝  ╚════██║██╔══██║██╔══██╗
+╚██████╗██║  ██║███████╗███████║██║  ██║██║  ██║
+ ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝
+    </pre>
+    <p class="tagline">encryption &middot; decryption &middot; brute-force cracking &middot; frequency analysis</p>
+  </header>
+
+  <main class="terminal" role="main">
+
+    <div class="term-titlebar">
+      <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+      <span class="term-path">caesar-cipher — zsh</span>
+    </div>
+
+    <nav class="cmdrow" role="tablist" aria-label="Command">
+      <button class="cmd active" data-cmd="encrypt" role="tab" aria-selected="true">encrypt</button>
+      <button class="cmd" data-cmd="decrypt" role="tab" aria-selected="false">decrypt</button>
+      <button class="cmd" data-cmd="crack" role="tab" aria-selected="false">crack</button>
+    </nav>
+
+    <section class="panel" id="panel-encrypt" role="tabpanel">
+      <label class="field-label" for="encrypt-input">$ caesar-cipher encrypt <span class="ph">TEXT</span> --key <span class="ph">N</span></label>
+      <textarea id="encrypt-input" class="input-area" rows="4" placeholder="Type or paste plaintext here&#10;e.g. THE EAGLE LANDS AT MIDNIGHT" spellcheck="false"></textarea>
+
+      <div class="controls">
+        <label class="key-label">
+          --key
+          <input type="number" id="encrypt-key" class="key-input" value="3" min="-25" max="26" />
+        </label>
+        <input type="range" id="encrypt-key-slider" class="key-slider" min="0" max="25" value="3" />
+        <button class="run-btn" id="encrypt-run">Run</button>
+      </div>
+
+      <div class="output-block">
+        <div class="output-label">Encrypted:</div>
+        <pre class="output" id="encrypt-output">&nbsp;</pre>
+        <button class="copy-btn" data-copy-target="encrypt-output">copy</button>
+      </div>
+    </section>
+
+    <section class="panel hidden" id="panel-decrypt" role="tabpanel">
+      <label class="field-label" for="decrypt-input">$ caesar-cipher decrypt <span class="ph">TEXT</span> --key <span class="ph">N</span></label>
+      <textarea id="decrypt-input" class="input-area" rows="4" placeholder="Type or paste ciphertext here&#10;e.g. WKH HDJOH ODQGV DW PLGQLJKW" spellcheck="false"></textarea>
+
+      <div class="controls">
+        <label class="key-label">
+          --key
+          <input type="number" id="decrypt-key" class="key-input" value="3" min="-25" max="26" />
+        </label>
+        <input type="range" id="decrypt-key-slider" class="key-slider" min="0" max="25" value="3" />
+        <button class="run-btn" id="decrypt-run">Run</button>
+      </div>
+
+      <div class="output-block">
+        <div class="output-label">Decrypted:</div>
+        <pre class="output" id="decrypt-output">&nbsp;</pre>
+        <button class="copy-btn" data-copy-target="decrypt-output">copy</button>
+      </div>
+    </section>
+
+    <section class="panel hidden" id="panel-crack" role="tabpanel">
+      <label class="field-label" for="crack-input">$ caesar-cipher crack <span class="ph">TEXT</span> --all</label>
+      <textarea id="crack-input" class="input-area" rows="4" placeholder="Paste ciphertext with an unknown key&#10;e.g. WKH HDJOH ODQGV DW PLGQLJKW" spellcheck="false"></textarea>
+
+      <div class="controls">
+        <label class="key-label toggle-label">
+          <input type="checkbox" id="crack-show-all" />
+          show all 26 shifts
+        </label>
+        <button class="run-btn" id="crack-run">Run</button>
+      </div>
+
+      <div class="table-wrap">
+        <table class="results-table" id="crack-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Shift</th>
+              <th>Score</th>
+              <th>Decrypted Text</th>
+            </tr>
+          </thead>
+          <tbody id="crack-tbody"></tbody>
+        </table>
+      </div>
+
+      <div class="output-block best-match hidden" id="crack-best-wrap">
+        <div class="output-label">Best match (shift <span id="crack-best-shift">0</span>):</div>
+        <pre class="output" id="crack-best-output">&nbsp;</pre>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <span>Caesar cipher logic runs entirely in your browser — nothing is sent anywhere.</span>
+  </footer>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
