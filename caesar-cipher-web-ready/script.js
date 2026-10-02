@@ -144,11 +144,11 @@ function runEncrypt() {
 
 encryptKeySlider.addEventListener("input", () => {
   encryptKey.value = encryptKeySlider.value;
-  runEncrypt();
 });
-encryptKey.addEventListener("change", runEncrypt);
-encryptInput.addEventListener("input", runEncrypt);
 $("#encrypt-run").addEventListener("click", runEncrypt);
+encryptInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) runEncrypt();
+});
 
 /* --- Decrypt ------------------------------------------------------------ */
 
@@ -171,11 +171,11 @@ function runDecrypt() {
 
 decryptKeySlider.addEventListener("input", () => {
   decryptKey.value = decryptKeySlider.value;
-  runDecrypt();
 });
-decryptKey.addEventListener("change", runDecrypt);
-decryptInput.addEventListener("input", runDecrypt);
 $("#decrypt-run").addEventListener("click", runDecrypt);
+decryptInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) runDecrypt();
+});
 
 /* --- Crack ---------------------------------------------------------------*/
 
@@ -224,9 +224,10 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-crackShowAll.addEventListener("change", runCrack);
-crackInput.addEventListener("input", runCrack);
 $("#crack-run").addEventListener("click", runCrack);
+crackInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) runCrack();
+});
 
 /* --- Copy buttons -------------------------------------------------------- */
 
@@ -245,7 +246,6 @@ document.querySelectorAll(".copy-btn").forEach((btn) => {
   });
 });
 
-/* --- Initial run ----------------------------------------------------------*/
+/* --- Initial state ----------------------------------------------------------*/
 
 encryptInput.value = "THE EAGLE LANDS AT MIDNIGHT";
-runEncrypt();
